@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import {
   Phone,
   Mail,
@@ -17,13 +17,13 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2 group">
-              <Image
+              {/* <Image
                 src="/logo.png"
                 alt="Gurukul Shikshaniketan Logo"
                 width={40}
                 height={40}
                 className="transition-transform group-hover:scale-110 rounded-full"
-              />
+              /> */}
               <div className="flex flex-col">
                 <span className="font-bold text-lg leading-tight">
                   {SCHOOL_INFO.shortName}
