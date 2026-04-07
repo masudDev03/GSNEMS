@@ -1,6 +1,14 @@
-import Link from 'next/link';
-import { GraduationCap, Phone, Mail, MapPin, Facebook, Instagram, MessageCircle } from 'lucide-react';
-import { SCHOOL_INFO, NAV_LINKS } from '@/lib/constants';
+import Link from "next/link";
+import Image from "next/image";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Facebook,
+  Instagram,
+  MessageCircle,
+} from "lucide-react";
+import { SCHOOL_INFO, NAV_LINKS } from "@/lib/constants";
 
 export function Footer() {
   return (
@@ -9,7 +17,13 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2 group">
-              <GraduationCap className="w-8 h-8 text-primary transition-transform group-hover:scale-110" />
+              <Image
+                src="/logo.png"
+                alt="Gurukul Shikshaniketan Logo"
+                width={40}
+                height={40}
+                className="transition-transform group-hover:scale-110 rounded-full"
+              />
               <div className="flex flex-col">
                 <span className="font-bold text-lg leading-tight">
                   {SCHOOL_INFO.shortName}
@@ -19,9 +33,7 @@ export function Footer() {
                 </span>
               </div>
             </Link>
-            <p className="text-sm text-slate-400">
-              {SCHOOL_INFO.tagline}
-            </p>
+            <p className="text-sm text-slate-400">{SCHOOL_INFO.tagline}</p>
           </div>
 
           <div>
@@ -31,8 +43,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-primary transition-colors"
-                  >
+                    className="text-sm text-slate-400 hover:text-primary transition-colors">
                     {link.label}
                   </Link>
                 </li>
@@ -51,8 +62,7 @@ export function Footer() {
                 <Phone className="w-4 h-4 flex-shrink-0" />
                 <a
                   href={`tel:${SCHOOL_INFO.phone}`}
-                  className="hover:text-primary transition-colors"
-                >
+                  className="hover:text-primary transition-colors">
                   {SCHOOL_INFO.phone}
                 </a>
               </li>
@@ -60,8 +70,7 @@ export function Footer() {
                 <Mail className="w-4 h-4 flex-shrink-0" />
                 <a
                   href={`mailto:${SCHOOL_INFO.email}`}
-                  className="hover:text-primary transition-colors"
-                >
+                  className="hover:text-primary transition-colors">
                   {SCHOOL_INFO.email}
                 </a>
               </li>
@@ -76,8 +85,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors"
-                aria-label="Facebook"
-              >
+                aria-label="Facebook">
                 <Facebook className="w-5 h-5" />
               </a>
               <a
@@ -85,8 +93,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors"
-                aria-label="Instagram"
-              >
+                aria-label="Instagram">
                 <Instagram className="w-5 h-5" />
               </a>
               <a
@@ -94,8 +101,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-secondary transition-colors"
-                aria-label="WhatsApp"
-              >
+                aria-label="WhatsApp">
                 <MessageCircle className="w-5 h-5" />
               </a>
             </div>
@@ -106,7 +112,8 @@ export function Footer() {
       <div className="border-t border-slate-800">
         <div className="container mx-auto px-4 py-6">
           <p className="text-center text-sm text-slate-400">
-            © {new Date().getFullYear()} {SCHOOL_INFO.name}. All rights reserved.
+            © {new Date().getFullYear()} {SCHOOL_INFO.name}. All rights
+            reserved.
           </p>
         </div>
       </div>
