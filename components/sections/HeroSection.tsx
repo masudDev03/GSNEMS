@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { SCHOOL_INFO } from '@/lib/constants';
 
 export function HeroSection() {
@@ -18,16 +18,6 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-              className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6"
-            >
-              <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-medium">Admissions Open for 2025-26</span>
-            </motion.div>
-
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent">
                 {SCHOOL_INFO.name}
@@ -64,7 +54,7 @@ export function HeroSection() {
                 className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6"
               >
                 <Link href="/admissions">
-                  Apply Now for 2025-26
+                  Apply Now
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
               </Button>

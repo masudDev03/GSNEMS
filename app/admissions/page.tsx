@@ -29,7 +29,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Toaster } from "@/components/ui/toaster";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { ADMISSION_STEPS, REQUIRED_DOCUMENTS, CLASSES } from "@/lib/constants";
-import { Check, FileText, Sparkles } from "lucide-react";
+import { Check, FileText } from "lucide-react";
 
 const formSchema = z.object({
   parentName: z.string().min(2, "Parent name must be at least 2 characters"),
@@ -121,12 +121,6 @@ export default function AdmissionsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-accent/10 text-accent px-4 py-2 rounded-full mb-6">
-              <Sparkles className="w-4 h-4" />
-              <span className="text-sm font-medium">
-                Admissions Open for 2025-26
-              </span>
-            </div>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Admissions
             </h1>
@@ -298,7 +292,7 @@ export default function AdmissionsPage() {
                         name="childName"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Child's Name *</FormLabel>
+                            <FormLabel>Child&apos;s Name *</FormLabel>
                             <FormControl>
                               <Input
                                 placeholder="Enter child's name"

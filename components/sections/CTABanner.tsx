@@ -23,7 +23,7 @@ export function CTABanner() {
           </div>
 
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Admissions Open for Academic Year 2025-26
+            Start Your Child&apos;s Journey With Us
           </h2>
 
           <p className="text-lg text-white/90 mb-8">
