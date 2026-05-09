@@ -9,11 +9,18 @@ import { NAV_LINKS, SCHOOL_INFO } from "@/lib/constants";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useHomeSlide } from "@/contexts/HomeSlideContext";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { currentSlide, isHomePage, totalSlides, isDesktop } = useHomeSlide();
+
+  // Use pathname as fallback to prevent flash before context registers
+  const onHomePage = (isHomePage || pathname === "/") && isDesktop;
+  const isLastSlide = onHomePage && currentSlide === totalSlides - 1;
+  const showFullNav = !onHomePage || isLastSlide;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,10 +49,12 @@ export function Navbar() {
       animate={{ y: 0 }}
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-white shadow-md"
-          : pathname === "/"
-            ? "bg-transparent"
+        onHomePage
+          ? isLastSlide
+            ? "bg-white/95 backdrop-blur-md shadow-md"
+            : "bg-transparent"
+          : isScrolled
+            ? "bg-white shadow-md"
             : "bg-white shadow-sm",
       )}>
       <nav className="container mx-auto px-4 py-4">
@@ -62,69 +71,129 @@ export function Navbar() {
               <span
                 className={cn(
                   "font-bold text-lg leading-tight transition-colors",
-                  isScrolled || pathname !== "/"
-                    ? "text-foreground"
-                    : "text-white",
+                  onHomePage
+                    ? isLastSlide
+                      ? "text-foreground"
+                      : "text-foreground"
+                    : isScrolled || pathname !== "/"
+                      ? "text-foreground"
+                      : "text-white",
                 )}>
                 {SCHOOL_INFO.shortName}
               </span>
               <span
                 className={cn(
                   "text-xs leading-tight transition-colors",
-                  isScrolled || pathname !== "/"
-                    ? "text-muted-foreground"
-                    : "text-white/80",
+                  onHomePage
+                    ? isLastSlide
+                      ? "text-muted-foreground"
+                      : "text-muted-foreground"
+                    : isScrolled || pathname !== "/"
+                      ? "text-muted-foreground"
+                      : "text-white/80",
                 )}>
                 English Medium School
               </span>
             </div>
           </Link>
 
-          <div className="hidden lg:flex items-center gap-8">
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary relative",
-                  pathname === link.href
-                    ? "text-primary"
-                    : isScrolled || pathname !== "/"
-                      ? "text-foreground"
-                      : "text-white",
-                )}>
-                {link.label}
-                {pathname === link.href && (
-                  <motion.div
-                    layoutId="navbar-indicator"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary"
-                  />
+          {/* Desktop nav links — conditionally shown on home page */}
+          <AnimatePresence>
+            {showFullNav && (
+              <motion.div
+                initial={onHomePage ? { opacity: 0, y: -20 } : false}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
+                className="hidden lg:flex items-center gap-8">
+                {NAV_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={cn(
+                      "text-sm font-medium transition-colors hover:text-primary relative",
+                      pathname === link.href
+                        ? "text-primary"
+                        : onHomePage
+                          ? isLastSlide
+                            ? "text-foreground"
+                            : "text-foreground"
+                          : isScrolled || pathname !== "/"
+                            ? "text-foreground"
+                            : "text-white",
+                    )}>
+                    {link.label}
+                    {pathname === link.href && (
+                      <motion.div
+                        layoutId="navbar-indicator"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary"
+                      />
+                    )}
+                  </Link>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <div className="flex items-center gap-4">
+            {/* Enquire Now button — conditionally shown on home page */}
+            <AnimatePresence>
+              {showFullNav && (
+                <motion.div
+                  initial={onHomePage ? { opacity: 0, y: -20 } : false}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, ease: "easeOut", delay: 0.1 }}
+                  className="hidden lg:block">
+                  <Button
+                    asChild
+                    className="bg-accent hover:bg-accent/90 text-accent-foreground">
+                    <Link href="/contact">Enquire Now</Link>
+                  </Button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Hamburger menu — always visible on home page, only mobile on other pages */}
+            <button
+              className={cn(
+                "p-2 transition-colors relative w-10 h-10 flex items-center justify-center",
+                onHomePage && !showFullNav ? "block" : "lg:hidden",
+                onHomePage
+                  ? isLastSlide
+                    ? "text-foreground"
+                    : "text-foreground"
+                  : isScrolled || pathname !== "/"
+                    ? "text-foreground"
+                    : "text-white",
+              )}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu">
+              <AnimatePresence mode="wait" initial={false}>
+                {isMobileMenuOpen ? (
+                  <motion.span
+                    key="close"
+                    initial={{ opacity: 0, rotate: -90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: 90 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute">
+                    <X className="w-6 h-6" />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="menu"
+                    initial={{ opacity: 0, rotate: 90 }}
+                    animate={{ opacity: 1, rotate: 0 }}
+                    exit={{ opacity: 0, rotate: -90 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute">
+                    <Menu className="w-6 h-6" />
+                  </motion.span>
                 )}
-              </Link>
-            ))}
+              </AnimatePresence>
+            </button>
           </div>
-
-          <div className="hidden lg:block">
-            <Button
-              asChild
-              className="bg-accent hover:bg-accent/90 text-accent-foreground">
-              <Link href="/contact">Enquire Now</Link>
-            </Button>
-          </div>
-
-          <button
-            className={cn(
-              "lg:hidden p-2 transition-colors",
-              isScrolled || pathname !== "/" ? "text-foreground" : "text-white",
-            )}
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu">
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
         </div>
       </nav>
 
@@ -134,7 +203,10 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden bg-white border-t overflow-hidden">
+            className={cn(
+              "bg-white border-t overflow-hidden",
+              onHomePage && !showFullNav ? "" : "lg:hidden",
+            )}>
             <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
               {NAV_LINKS.map((link, index) => (
                 <motion.div

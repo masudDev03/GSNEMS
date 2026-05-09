@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -9,12 +11,51 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { SCHOOL_INFO, NAV_LINKS } from "@/lib/constants";
+import { motion, AnimatePresence } from "framer-motion";
+import { useHomeSlide } from "@/contexts/HomeSlideContext";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export function Footer() {
+  const { currentSlide, isHomePage, totalSlides, isDesktop } = useHomeSlide();
+  const pathname = usePathname();
+
+  // Use pathname as fallback to prevent flash before context registers
+  const onHomePage = (isHomePage || pathname === "/") && isDesktop;
+  const isLastSlide = onHomePage && currentSlide === totalSlides - 1;
+
+  // On home page: hidden by default, slide up on last slide
+  // On other pages: always visible
+  if (onHomePage) {
+    return (
+      <AnimatePresence>
+        {isLastSlide && (
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 35,
+              mass: 0.8,
+            }}
+            className="fixed top-0 right-0 bottom-0 w-80 z-40 overflow-y-auto bg-slate-900 shadow-2xl border-l border-slate-800">
+            <FooterContent vertical />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    );
+  }
+
+  return <FooterContent />;
+}
+
+function FooterContent({ vertical = false }: { vertical?: boolean }) {
   return (
-    <footer className="bg-slate-900 text-slate-100">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <footer className={cn("bg-slate-900 text-slate-100", vertical && "min-h-full flex flex-col")}>
+      <div className={cn("py-12", vertical ? "px-6 flex-1" : "container mx-auto px-4")}>
+        <div className={cn("grid gap-8", vertical ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-4")}>
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2 group">
               <Image

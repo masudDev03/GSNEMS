@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
 import { SCHOOL_INFO } from "@/lib/constants";
+import { HomeSlideProvider } from "@/contexts/HomeSlideContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,9 +39,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <HomeSlideProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </HomeSlideProvider>
       </body>
     </html>
   );
