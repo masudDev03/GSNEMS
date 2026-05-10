@@ -7,7 +7,6 @@ import {
   Mail,
   MapPin,
   Facebook,
-  Instagram,
   MessageCircle,
 } from "lucide-react";
 import { SCHOOL_INFO, NAV_LINKS } from "@/lib/constants";
@@ -129,14 +128,7 @@ function FooterContent({ vertical = false }: { vertical?: boolean }) {
                 aria-label="Facebook">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a
-                href={SCHOOL_INFO.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary transition-colors"
-                aria-label="Instagram">
-                <Instagram className="w-5 h-5" />
-              </a>
+
               <a
                 href={SCHOOL_INFO.social.whatsapp}
                 target="_blank"
