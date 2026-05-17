@@ -38,3 +38,6 @@ next-env.d.ts
 # Agent files to remove before deployment
 .agents
 .bolt
+
+#netlify
+.netlify.toml

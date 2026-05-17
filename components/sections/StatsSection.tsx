@@ -38,11 +38,11 @@ export function StatsSection() {
 
   {/* Background Image */}
   <Image
-    src="/homepage.counting.bg.jpeg"
+    src="/homePageCountingbg.jpg"
     alt="Background"
     fill
     priority
-    className="object-contain"
+    className="object-cover"
   />
 
   {/* Content */}

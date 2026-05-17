@@ -10,6 +10,7 @@ import {
   Palette,
   Leaf,
 } from "lucide-react";
+import { GalleryItem } from "@/components/gallery/GalleryCard";
 
 export const SCHOOL_INFO = {
   name: "Gurukul Shikshaniketan English Medium School",
@@ -330,79 +331,27 @@ export const GALLERY_CATEGORIES = [
   "Sports",
 ];
 
-export const GALLERY_ITEMS = [
-  {
-    id: 1,
-    category: "Classrooms",
-    title: "Bright Classroom Environment",
-    alt: "Students in a colorful classroom",
-  },
-  {
-    id: 2,
-    category: "Activities",
-    title: "Art & Craft Session",
-    alt: "Children doing art and craft activities",
-  },
-  {
-    id: 3,
-    category: "Events",
-    title: "Annual Day Celebration",
-    alt: "Annual day event with students performing",
-  },
-  {
-    id: 4,
-    category: "Sports",
-    title: "Sports Day Activities",
-    alt: "Children participating in sports",
-  },
-  {
-    id: 5,
-    category: "Classrooms",
-    title: "Library Corner",
-    alt: "School library with books",
-  },
-  {
-    id: 6,
-    category: "Activities",
-    title: "Science Learning",
-    alt: "Students engaged in science experiments",
-  },
-  {
-    id: 7,
-    category: "Events",
-    title: "Cultural Program",
-    alt: "Students performing cultural dance",
-  },
-  {
-    id: 8,
-    category: "Sports",
-    title: "Playground Fun",
-    alt: "Children playing in the playground",
-  },
-  {
-    id: 9,
-    category: "Classrooms",
-    title: "Smart Board Learning",
-    alt: "Teacher using smart board in class",
-  },
-  {
-    id: 10,
-    category: "Activities",
-    title: "Music Class",
-    alt: "Children learning music",
-  },
-  {
-    id: 11,
-    category: "Events",
-    title: "Independence Day",
-    alt: "Independence day celebration",
-  },
-  {
-    id: 12,
-    category: "Sports",
-    title: "Physical Education",
-    alt: "PT class with students exercising",
-  },
+export const GALLERY_ITEMS: GalleryItem[] = [
+   {
+     id: 1,
+     title: "Sports Day Activities",
+     category: "Sports",
+     coverImage: "/img-file/Gallery/Sports Day/sportsSDACover.jpg",
+     images: [
+       "/img-file/Gallery/Sports Day/sportsSDAimg2.jpeg",
+       "/img-file/Gallery/Sports Day/sportsSDACover.jpg"
+     ]
+   },
+   {
+     id: 2,
+     title: "Arts and Crafts Session",
+     category: "Activities",
+     coverImage: "/img-file/Gallery/Art and Craft/artsandcrafts.jpeg",
+     images: [
+       "/img-file/Gallery/Art and Craft/artsandcrafts.jpeg"
+     ]
+   },
+
 ];
 
 export const NAV_LINKS = [
