@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,6 +13,7 @@ import {
 import { SectionHeader } from '@/components/shared/SectionHeader';
 import { CLASSES, TEACHING_APPROACHES, DAILY_SCHEDULE } from '@/lib/constants';
 import { GraduationCap, Clock } from 'lucide-react';
+import Loading from '@/app/loading';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -33,6 +35,19 @@ const itemVariants = {
 };
 
 export default function AcademicsPage() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="pt-24">
       <section className="py-20 bg-gradient-to-br from-blue-50 via-white to-green-50">

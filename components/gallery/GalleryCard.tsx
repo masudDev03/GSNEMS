@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { Images } from 'lucide-react';
 
@@ -18,6 +19,7 @@ interface GalleryCardProps {
 
 export function GalleryCard({ item, onClick }: GalleryCardProps) {
   const { title, category, coverImage, images } = item;
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
     <div 
@@ -65,9 +67,17 @@ export function GalleryCard({ item, onClick }: GalleryCardProps) {
             alt={title} 
             fill 
             sizes="(max-width: 768px) 50vw, 33vw"
-            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" 
+            className={`object-cover transition-all duration-700 ease-out group-hover:scale-105 ${
+              isImageLoaded ? 'scale-100 opacity-100' : 'scale-105 opacity-0'
+            }`} 
             priority={item.id <= 4}
+            onLoad={() => setIsImageLoaded(true)}
           />
+
+          {/* Skeleton Shimmer Overlay */}
+          {!isImageLoaded && (
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200/65 animate-pulse z-10" />
+          )}
           
           {/* Subtle vignette overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-75 z-10" />

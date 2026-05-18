@@ -15,6 +15,12 @@ interface GalleryLightboxProps {
 export function GalleryLightbox({ item, isOpen, onClose }: GalleryLightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0); // -1 for left, 1 for right
+  const [isLightboxImageLoaded, setIsLightboxImageLoaded] = useState(false);
+
+  // Reset image load state when item or index changes
+  useEffect(() => {
+    setIsLightboxImageLoaded(false);
+  }, [item, currentIndex]);
 
   const images = item?.images || [];
 
@@ -174,14 +180,28 @@ export function GalleryLightbox({ item, isOpen, onClose }: GalleryLightboxProps)
                       className="w-full h-full max-h-[55vh] md:max-h-[65vh] object-contain rounded-xl shadow-2xl focus:outline-none"
                     />
                   ) : (
-                    <Image
-                      src={images[currentIndex]}
-                      alt={`${item.title} - Image ${currentIndex + 1}`}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 1200px"
-                      className="object-contain select-none"
-                      priority
-                    />
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <Image
+                        src={images[currentIndex]}
+                        alt={`${item.title} - Image ${currentIndex + 1}`}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 1200px"
+                        className={`object-contain select-none transition-all duration-300 ${
+                          isLightboxImageLoaded ? 'scale-100 opacity-100' : 'scale-[0.98] opacity-0'
+                        }`}
+                        priority
+                        onLoad={() => setIsLightboxImageLoaded(true)}
+                      />
+                      {!isLightboxImageLoaded && (
+                        <div className="absolute inset-0 flex items-center justify-center z-10">
+                          {/* A premium dark-theme glowing skeleton card for the lightbox */}
+                          <div className="w-full h-full max-w-4xl max-h-[50vh] rounded-xl bg-slate-900/50 animate-pulse border border-slate-800/40 backdrop-blur-sm flex items-center justify-center">
+                            {/* Glowing progress spinner */}
+                            <div className="w-9 h-9 rounded-full border-2 border-primary/20 border-t-primary animate-spin" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   )}
                 </motion.div>
               </AnimatePresence>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -30,6 +30,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { SectionHeader } from "@/components/shared/SectionHeader";
 import { ADMISSION_STEPS, REQUIRED_DOCUMENTS, CLASSES } from "@/lib/constants";
 import { Check, FileText } from "lucide-react";
+import Loading from "@/app/loading";
 
 const formSchema = z.object({
   parentName: z.string().min(2, "Parent name must be at least 2 characters"),
@@ -55,6 +56,14 @@ type FormData = z.infer<typeof formSchema>;
 export default function AdmissionsPage() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -110,6 +119,10 @@ export default function AdmissionsPage() {
     form.reset();
     setIsSubmitting(false);
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="pt-24">
       <Toaster />
