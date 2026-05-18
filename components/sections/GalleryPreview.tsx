@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -12,6 +12,10 @@ import { GalleryLightbox } from '@/components/gallery/GalleryLightbox';
 
 export function GalleryPreview() {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+  
+  const handleClose = useCallback(() => {
+    setSelectedItem(null);
+  }, []);
   
   // Show 6 albums on the homepage preview
   const previewItems = GALLERY_ITEMS.slice(0, 6);
@@ -58,7 +62,7 @@ export function GalleryPreview() {
       <GalleryLightbox
         item={selectedItem}
         isOpen={selectedItem !== null}
-        onClose={() => setSelectedItem(null)}
+        onClose={handleClose}
       />
     </section>
   );

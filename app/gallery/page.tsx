@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { GALLERY_CATEGORIES, GALLERY_ITEMS } from '@/lib/constants';
 import { GalleryCard, GalleryItem } from '@/components/gallery/GalleryCard';
@@ -10,6 +10,10 @@ import { GalleryLightbox } from '@/components/gallery/GalleryLightbox';
 export default function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+
+  const handleClose = useCallback(() => {
+    setSelectedItem(null);
+  }, []);
 
   const filteredItems =
     selectedCategory === 'All'
@@ -95,7 +99,7 @@ export default function GalleryPage() {
       <GalleryLightbox
         item={selectedItem}
         isOpen={selectedItem !== null}
-        onClose={() => setSelectedItem(null)}
+        onClose={handleClose}
       />
     </div>
   );

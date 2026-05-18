@@ -336,19 +336,19 @@ export const GALLERY_ITEMS: GalleryItem[] = [
      id: 1,
      title: "Sports Day Activities",
      category: "Sports",
-     coverImage: "/img-file/Gallery/Sports Day/sportsSDACover.jpg",
+     coverImage: "/img-file/Gallery/Sports Day/homePageCountingbg.jpg",
      images: [
-       "/img-file/Gallery/Sports Day/sportsSDAimg2.jpeg",
-       "/img-file/Gallery/Sports Day/sportsSDACover.jpg"
+       "/img-file/Gallery/Sports Day/homePageCountingbg.jpg",
+       "/img-file/Gallery/Sports Day/sportsDayimg2.jpeg"
      ]
    },
    {
      id: 2,
      title: "Arts and Crafts Session",
      category: "Activities",
-     coverImage: "/img-file/Gallery/Art and Craft/artsandcrafts.jpeg",
+     coverImage: "/img-file/Gallery/Art and Craft/AaCimg1.jpeg",
      images: [
-       "/img-file/Gallery/Art and Craft/artsandcrafts.jpeg"
+       "/img-file/Gallery/Art and Craft/AaCimg1.jpeg",
      ]
    },
 

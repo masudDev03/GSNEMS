@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, X, Play } from 'lucide-react';
@@ -15,6 +15,22 @@ interface GalleryLightboxProps {
 export function GalleryLightbox({ item, isOpen, onClose }: GalleryLightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0); // -1 for left, 1 for right
+
+  const images = item?.images || [];
+
+  const handleNext = useCallback((e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (images.length <= 1) return;
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  }, [images.length]);
+
+  const handlePrev = useCallback((e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (images.length <= 1) return;
+    setDirection(-1);
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  }, [images.length]);
 
   // Reset index when modal opens with a new item
   useEffect(() => {
@@ -40,25 +56,9 @@ export function GalleryLightbox({ item, isOpen, onClose }: GalleryLightboxProps)
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, item, currentIndex]);
+  }, [isOpen, item, handleNext, handlePrev, onClose]);
 
   if (!item) return null;
-
-  const images = item.images;
-
-  const handleNext = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (images.length <= 1) return;
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const handlePrev = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (images.length <= 1) return;
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
 
   const handleThumbnailClick = (index: number, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -79,7 +79,7 @@ export function GalleryLightbox({ item, isOpen, onClose }: GalleryLightboxProps)
       opacity: 1,
       scale: 1,
       transition: {
-        x: { type: 'spring', stiffness: 320, damping: 30 },
+        x: { type: 'spring' as const, stiffness: 320, damping: 30 },
         opacity: { duration: 0.25 },
         scale: { duration: 0.25 },
       },
@@ -89,7 +89,7 @@ export function GalleryLightbox({ item, isOpen, onClose }: GalleryLightboxProps)
       opacity: 0,
       scale: 0.95,
       transition: {
-        x: { type: 'spring', stiffness: 320, damping: 30 },
+        x: { type: 'spring' as const, stiffness: 320, damping: 30 },
         opacity: { duration: 0.2 },
         scale: { duration: 0.2 },
       },
