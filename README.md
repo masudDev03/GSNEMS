@@ -1,3 +1,7 @@
+Official website project developed for [Gurukul Shikshaniketan English Medium School].
+
+Source code is shared for portfolio and demonstration purposes only.
+
 # Gurukul Shikshaniketan English Medium School — Official Website
 
 > The official web presence of Gurukul Shikshaniketan English Medium School, built with React, TypeScript, and Tailwind CSS.
