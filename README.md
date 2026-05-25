@@ -26,24 +26,6 @@
 
 ---
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js `v18+`
-- npm or yarn
-
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### Build for Production
-
-```bash
-npm run build
-```
-
----
-
 ## 📁 Project Structure
 
 ```
@@ -58,9 +40,9 @@ src/
 
 ## 🌐 Deployment
 
-The site is deployed and live. Every push to `main` triggers an automatic deployment via Vercel/Netlify.
+The site is deployed and live. Every push to `main` triggers an automatic deployment via Vercel
 
-> **Live URL:** _add your live URL here_
+> **Live URL:** [_add your live URL here_](https://gsnems.vercel.app/)
 
 ---
 
