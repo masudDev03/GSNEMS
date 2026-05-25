@@ -46,12 +46,6 @@ The site is deployed and live. Every push to `main` triggers an automatic deploy
 
 ---
 
-## 🤝 Contributing
-
-This is a school project. If you're a contributor or maintainer, please open an issue or pull request with a clear description of your changes.
-
----
-
 ## 📄 License
 
 All rights reserved © Gurukul Shikshaniketan English Medium School.
