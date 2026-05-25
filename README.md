@@ -42,7 +42,7 @@ src/
 
 The site is deployed and live. Every push to `main` triggers an automatic deployment via Vercel
 
-> **Live URL:** [_add your live URL here_](https://gsnems.vercel.app/)
+> **Live URL:** [ gsnems_](https://gsnems.vercel.app/)
 
 ---
 
